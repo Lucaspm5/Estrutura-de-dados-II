@@ -10,15 +10,15 @@ struct participantes {
 	Participantes *next;
 };
 //--------------------------------------------------------------------
+Participantes* _Creater() { return ((Participantes*)malloc(sizeof(Participantes))); }
 Participantes* _Init() { return (NULL); }
 //--------------------------------------------------------------------
 Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao){
-	Participantes* novo = (Participantes*) malloc(sizeof(Participantes));
+	Participantes* novo = _Creater();
 	strcpy(novo->nome_artista, nome_artista);
  	strcpy(novo->nome_personagem, nome_personagem);
  	strcpy(novo->descricao, descricao);
  	novo->next = _Init();
-
 	return novo;
 }
 //--------------------------------------------------------------------
