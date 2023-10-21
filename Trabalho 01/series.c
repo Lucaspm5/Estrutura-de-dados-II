@@ -3,14 +3,14 @@
 #include <string.h>
 #include "series.h"
 #include "temporadas.h"
-
+//--------------------------------------------------------------------
 struct series {
     int codigo, num_temporadas;
     char titulo[50];
     // temp* temporadas;
     struct series *esq, *dir;
 };
-
+//--------------------------------------------------------------------
 Series* create_node(int codigo, char* titulo, int num_temporadas){
 	Series* node = (Series*) malloc(sizeof(Series));
 	node->codigo = codigo;
@@ -21,7 +21,7 @@ Series* create_node(int codigo, char* titulo, int num_temporadas){
 
 	return node;
 }
-
+//--------------------------------------------------------------------
 void inserir_serie(Series** root, Series* node){
 	if(!(*root)){
 		(*root) = node;
@@ -33,7 +33,7 @@ void inserir_serie(Series** root, Series* node){
 		}
 	}
 }
-
+//--------------------------------------------------------------------
 void imprimir_series(Series* root){
 	if(root){
 		imprimir_series(root->esq);
@@ -41,7 +41,7 @@ void imprimir_series(Series* root){
 		imprimir_series(root->dir);
 	}
 }
-
+//--------------------------------------------------------------------
 int main(){
 
 	Series* root = NULL, *node;
