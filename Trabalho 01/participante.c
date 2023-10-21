@@ -1,24 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "participantes.h"
+#include "participante.h"
 
 #define debug(x) printf("%s is %d\n", #x, x)
+#define ALOCAR(y) (y*) malloc(sizeof(y))
 //--------------------------------------------------------------------
 struct participantes {
 	char nome_artista[50], nome_personagem[50], descricao[100];
 	Participantes *next;
 };
 //--------------------------------------------------------------------
-Participantes* _Creater() { return ((Participantes*)malloc(sizeof(Participantes))); }
-Participantes* _Init() { return (NULL); }
-//--------------------------------------------------------------------
 Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao){
-	Participantes* novo = _Creater();
+	Participantes* novo = ALOCAR(Participantes);
 	strcpy(novo->nome_artista, nome_artista);
  	strcpy(novo->nome_personagem, nome_personagem);
  	strcpy(novo->descricao, descricao);
- 	novo->next = _Init();
+ 	novo->next = NULL;
 	return novo;
 }
 //--------------------------------------------------------------------
@@ -58,7 +56,7 @@ Participantes* sort(Participantes* head){
 }
 //--------------------------------------------------------------------
 int main() {
-	Participantes* lista = _Init();
+	Participantes* lista = NULL;
 
 	insert(&lista, "joao", "teste1", "teste1");
 	insert(&lista, "pedro", "teste2", "teste2");
