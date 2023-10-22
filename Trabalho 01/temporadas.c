@@ -6,7 +6,7 @@
 #include "participante.h"
 
 #define debug(x) printf("%s is %d\n", #x, x)
-#define ALOCAR(y) (y*) malloc(sizeof(y))
+#define ALOCAR(m) (m*) malloc(sizeof(m))
 
 bool dp[10000], flag = true;
 //-------------------------------------------------------------------------
@@ -53,15 +53,11 @@ void imprimir(temp *no) {
     }
 }
 //-------------------------------------------------------------------------
-int _Validtemp(temp *no) { return (no) ? 1 : 0; }
-//-------------------------------------------------------------------------
 int existe_temp(int num) { return (dp[num]) ? 1 : 0; }
 //-------------------------------------------------------------------------
 void search_binary(temp *no, int num, int opc) {
-    if (!existe_temp(num)) {
-        printf("Informe uma temporada valida ou cadastre uma\n");
-        return;
-    }
+    if (!no) return;
+    if (!existe_temp(num)) printf("Informe uma temporada valida ou cadastre uma\n");
     if (no->numero == num && opc == 3) {
         imprimir_participantes(no->participantes);
     } else if (no->numero == num && opc == 2) {
@@ -72,8 +68,7 @@ void search_binary(temp *no, int num, int opc) {
         printf("Informe a descricao:\n");
         fflush(stdin);
         scanf("%[^\n]s", d);
-        insertparticipantes(&no->participantes, nomea, nomep, d);
-        return;
+        insertAndSort(&no->participantes, nomea, nomep, d);
     }
     if (no) {
         search_binary(no->l, num, opc);
