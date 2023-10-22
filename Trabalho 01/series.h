@@ -1,4 +1,11 @@
-typedef struct series Series;
+#include "temporadas.h"
 
-void inserir_serie(Series** root, Series* node);
-void imprimir_series(Series* root);
+typedef struct Serie {
+    int codigo, num_temporadas;
+    char titulo[50];
+    temp* temporadas;
+    struct Serie *esq, *dir;
+} Serie;
+
+Serie* inserir_serie(Serie* raiz, int codigo, char* titulo, int num_temporadas);
+void imprimir_series(Serie* raiz);

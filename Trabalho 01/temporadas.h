@@ -1,4 +1,8 @@
 typedef struct Temporada temp;
 
-temp* inserir_temporada(temp* raiz, int numero, char* titulo, int qtd_episodios, int ano);
-void imprimir_temporadas(temp* raiz);
+void _INIT();
+void insert_tree(temp **r, int number, int eps, int year, char *rating);
+temp* _Creater(int number, int eps, int year, char *rating);
+void search_binary(temp *no, int num, int opc);
+int existe_temp(int num);
+int _Validtemp(temp *no);

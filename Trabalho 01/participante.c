@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "participante.h"
+#include "temporadas.h"
 
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(y) (y*) malloc(sizeof(y))
@@ -11,7 +12,7 @@ struct participantes {
 	Participantes *next;
 };
 //--------------------------------------------------------------------
-Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao){
+Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao) {
 	Participantes* novo = ALOCAR(Participantes);
 	strcpy(novo->nome_artista, nome_artista);
  	strcpy(novo->nome_personagem, nome_personagem);
@@ -20,23 +21,29 @@ Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao)
 	return novo;
 }
 //--------------------------------------------------------------------
-void insert(Participantes** lista, char *nome_artista, char *nome_personagem, char *descricao){
-	if (!(*lista)) {
+void insertparticipantes(Participantes** lista, char *nome_artista, char *nome_personagem, char *descricao) {
+	if (*lista == NULL) {
 		Participantes* novo = criar(nome_artista, nome_personagem, descricao);
 		(*lista) = novo;
 	} else {
-		insert(&(*lista)->next, nome_artista, nome_personagem, descricao);
+		insertparticipantes(&(*lista)->next, nome_artista, nome_personagem, descricao);
 	}
 }
 //--------------------------------------------------------------------
-void imprimir(Participantes* lista) {
-	if (lista) {
-		printf("Ator: %s\nPapel: %s\nDescricao: %s\n", lista->nome_artista, lista->nome_personagem, lista->descricao);
-		imprimir(lista->next);
+int _Validparticipantes(Participantes *no) { return (no) ? 1 : 0; }
+//--------------------------------------------------------------------
+void imprimir_participantes(Participantes* lista) {
+	if (!_Validparticipantes(lista)) {
+		printf("Ocorreu um erro, sem participantes cadastrados\n");
+	} else {
+		if (lista) {
+			printf("Ator: %s\nPapel: %s\nDescricao: %s\n", lista->nome_artista, lista->nome_personagem, lista->descricao);
+			imprimir_participantes(lista->next);
+		}
 	}
 }
 //--------------------------------------------------------------------
-Participantes* sort(Participantes* head){
+Participantes* sort(Participantes* head) {
 	if (!head || !head->next) return head;
 
     head->next = sort(head->next);
@@ -53,23 +60,4 @@ Participantes* sort(Participantes* head){
     node->next = head;
 
     return next;
-}
-//--------------------------------------------------------------------
-int main() {
-	Participantes* lista = NULL;
-
-	insert(&lista, "joao", "teste1", "teste1");
-	insert(&lista, "pedro", "teste2", "teste2");
-	insert(&lista, "zeca", "teste3", "teste3");
-	insert(&lista, "nuke", "teste4", "teste4");
-	insert(&lista, "antonio", "teste5", "teste5");
-	insert(&lista, "ana", "teste6", "teste6");
-	insert(&lista, "liedson", "teste7", "teste7");
-	// imprimir(lista);
-	lista = sort(lista);
-	// printf("sort:\n");
-	imprimir(lista);
-
-	printf("\n");
-	return 0;
 }
