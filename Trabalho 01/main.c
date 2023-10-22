@@ -41,8 +41,6 @@ int main() {
                 p("Informe a temporada:"); s("%d", &numb);
                 search_binary(no, numb, opc);
                 break;
-            default:
-                p("opcao invalida\n");
         }
     } while (opc != -1);
     return 0;
