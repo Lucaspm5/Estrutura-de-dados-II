@@ -8,11 +8,6 @@
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(y) (y*) malloc(sizeof(y))
 //--------------------------------------------------------------------
-struct participantes {
-	char nome_artista[50], nome_personagem[50], descricao[100];
-	Participantes *next;
-};
-//--------------------------------------------------------------------
 Participantes* criar(char *nome_artista, char *nome_personagem, char *descricao) {
 	Participantes* no = ALOCAR(Participantes);
 	strcpy(no->nome_artista, nome_artista);

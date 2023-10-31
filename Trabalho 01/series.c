@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #include "participante.h"
 #include "temporadas.h"
@@ -10,23 +9,16 @@
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(y) (y*) malloc(sizeof(y))
 //-------------------------------------------------------------------------
-bool dp2[10000], flag2 = true;
-//--------------------------------------------------------------------
-struct series {
-    int codigo, num_temporadas;
-    char titulo[50];
-    temp* temporadas;
-    struct series *esq, *dir;
-};
+int dp2[10000], flag2 = 1;
 //-------------------------------------------------------------------------
-void vectormemo() { memset(dp2, false, sizeof(dp2)); }
+void vectormemo() { memset(dp2, -1, sizeof(dp2)); }
 //--------------------------------------------------------------------
 Series* create_node(int codigo, char* titulo, int num_temporadas) {
 	Series* node = ALOCAR(Series);
 	node->codigo = codigo;
 	node->num_temporadas = num_temporadas;
 	strcpy(node->titulo, titulo);
-	node->esq = node->dir = NULL;
+	node->l = node->r = NULL;
 	return node;
 }
 //--------------------------------------------------------------------
@@ -37,30 +29,30 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 			vectormemo();
 			flag2 = !flag2;
 		}
-		dp2[(*no)->codigo] = true;
+		dp2[(*no)->codigo] = 1;
 	} else {
 		if(codigo < (*no)->codigo) {
-			inserir_serie(&(*no)->esq, codigo, num_temp, titulo);
+			inserir_serie(&(*no)->l, codigo, num_temp, titulo);
 		} else if(codigo > (*no)->codigo) {
-			inserir_serie(&(*no)->dir, codigo, num_temp, titulo);
+			inserir_serie(&(*no)->r, codigo, num_temp, titulo);
 		}
 	}
 }
 //--------------------------------------------------------------------
 void imprimir_series(Series* no) {
 	if(no) {
-		imprimir_series(no->esq);
+		imprimir_series(no->l);
 		printf("Codigo: %d\nTitulo: %s\nTemporadas: %d\n", no->codigo, no->titulo, no->num_temporadas);
-		imprimir_series(no->dir);
+		imprimir_series(no->r);
 	}
 }
 //-------------------------------------------------------------------------
-int existe(int num) { return (dp2[num]) ? 1 : 0; }
+int existe(int num) { return (dp2[num] != -1) ? 1 : 0; }
 //--------------------------------------------------------------------
 void search_Tree(Series *no, int codigo, int num, int opc) {
-	if (!no) return;
-	if (!existe(codigo)) {
+	if (!existe(codigo) || !no) {
 		printf("Codigo nao cadastrado, informe um codigo valido!\n");
+		return;
 	}
 	if (no->codigo == codigo) {
 		int numb, qntd_eps, ano;
@@ -74,8 +66,7 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 			case 3:
 				search_binary(no->temporadas, num, opc);
 				break;
-			case 4:
-				imprimir_series(no);
+			case 4: imprimir_series(no);
 				break;
 			case 5:
 				imprimir(no->temporadas);
@@ -90,7 +81,10 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 				break;
 		}
 	} else {
-		search_Tree(no->esq, codigo, num, opc);
-		search_Tree(no->dir, codigo, num, opc);
+		if (codigo < no->codigo) {
+			search_Tree(no->l, codigo, num, opc);
+		} else if (codigo > no->codigo) {
+			search_Tree(no->r, codigo, num, opc);
+		}
 	}
 }

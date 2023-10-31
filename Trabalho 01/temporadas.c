@@ -1,25 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #include "temporadas.h"
 #include "participante.h"
 
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(m) (m*) malloc(sizeof(m))
-
 //-------------------------------------------------------------------------
-bool dp1[10000], flag1 = true;
+int dp1[10000], flag1 = 1;
 //-------------------------------------------------------------------------
-struct Temporada {
-    int numero, qtd_episodios, ano;
-    char titulo[50];
-    Participantes* participantes;
-    struct Temporada *l, *r;
-};
-//-------------------------------------------------------------------------
-void _INIT() { memset(dp1, false, sizeof(dp1)); }
+void _INIT() { memset(dp1, -1, sizeof(dp1)); }
 //-------------------------------------------------------------------------
 temp* _Creater(int number, int eps, int year, char *rating) {
     temp *no = ALOCAR(temp);
@@ -40,7 +31,7 @@ void insert_tree(temp **r, int number, int eps, int year, char *rating) {
     if (*r == NULL) {
         aux = _Creater(number, eps, year, rating);
         (*r) = aux;
-        dp1[(*r)->numero] = true;
+        dp1[(*r)->numero] = 1;
     } else {
         if ((*r)->numero > number) insert_tree(&((*r)->l), number, eps, year, rating);
         else if ((*r)->numero < number) insert_tree(&((*r)->r), number, eps, year, rating);
@@ -56,12 +47,12 @@ void imprimir(temp *no) {
     }
 }
 //-------------------------------------------------------------------------
-int existe_temp(int num) { return (dp1[num]) ? 1 : 0; }
+int existe_temp(int num) { return (dp1[num] != -1) ? 1 : 0; }
 //-------------------------------------------------------------------------
 void search_binary(temp *no, int num, int opc) {
-    if (!no) return;
-    if (!existe_temp(num)) {
+    if (!existe_temp(num) || !no) {
         printf("Informe uma temporada valida ou cadastre uma\n");
+        return;
     }
     if (no->numero == num) {
         char nomea[50], nomep[50], d[200];
@@ -81,10 +72,12 @@ void search_binary(temp *no, int num, int opc) {
                 } else imprimir_participantes(no->participantes);
                 break;
         }
-    }
-    if (no) {
-        search_binary(no->l, num, opc);
-        search_binary(no->r, num, opc);
+    } else {
+        if (num < no->numero) {
+            search_binary(no->l, num, opc);
+        } else if (num > no->numero) {
+            search_binary(no->r, num, opc);
+        }
     }
 }
 //-------------------------------------------------------------------------

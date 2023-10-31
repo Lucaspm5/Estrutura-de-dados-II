@@ -8,13 +8,13 @@
 
 //--------------------------------------------------------------------
 void menu() {
-    printf("1 - Adicionar Serie\n");
-    printf("2 - Adicionar Temporada\n");
-    printf("3 - Adicionar Participantes\n");
-    printf("4 - Imprimir em ordem pelo codigo da serie: o titulo, o numero de temporadas\n");
-    printf("5 - Imprimir os dados de todas as temporadas de uma serie\n");
-    printf("6 - Imprimir todos os personagens de uma determinada temporada\n");
-    printf("7 - Imprimir o nome de todos os artistas que interpretaram um determinado personagem em todas as temporadas de uma dada serie\n");
+    printf("(1) - Adicionar Serie\n");
+    printf("(2) - Adicionar Temporada\n");
+    printf("(3) - Adicionar Participantes\n");
+    printf("(4) - Imprimir o titulo, o numero de temporadas\n");
+    printf("(5) - Imprimir os dados de todas as temporadas de uma serie\n");
+    printf("(6) - Imprimir todos os personagens de uma determinada temporada\n");
+    printf("(7) - Imprimir o nome de todos os artistas que interpretaram um determinado personagem\n");
     printf("(-1) para sair\n\n");
 }
 //--------------------------------------------------------------------
@@ -57,6 +57,8 @@ int main() {
                 search_Tree(pointer, codigo, numb, opc);
                 break;
             case 7:
+                printf("Informe o codigo da serie:\n");
+                scanf("%d %d", &codigo);
                 search_Tree(pointer, codigo, numb, opc);
                 break;
         }
