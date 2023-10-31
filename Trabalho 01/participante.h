@@ -2,7 +2,6 @@
 #define _PERSONAGENS_H
 
 typedef struct participantes Participantes;
-
 //-------------------------------------------------------------------------
 struct participantes {
 	char nome_artista[50], nome_personagem[50], descricao[100];
