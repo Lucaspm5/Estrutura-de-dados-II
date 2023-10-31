@@ -12,7 +12,7 @@
 int dp2[10000], flag2 = 1;
 //-------------------------------------------------------------------------
 void vectormemo() { memset(dp2, -1, sizeof(dp2)); }
-//--------------------------------------------------------------------
+//-------------------------------------------------------------------------
 Series* create_node(int codigo, char* titulo, int num_temporadas) {
 	Series* node = ALOCAR(Series);
 	node->codigo = codigo;
@@ -21,7 +21,7 @@ Series* create_node(int codigo, char* titulo, int num_temporadas) {
 	node->l = node->r = NULL;
 	return node;
 }
-//--------------------------------------------------------------------
+//-------------------------------------------------------------------------
 void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 	if(!(*no)) {
 		(*no) = create_node(codigo, titulo, num_temp);
@@ -38,7 +38,7 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 		}
 	}
 }
-//--------------------------------------------------------------------
+//-------------------------------------------------------------------------
 void imprimir_series(Series* no) {
 	if(no) {
 		imprimir_series(no->l);
@@ -48,7 +48,7 @@ void imprimir_series(Series* no) {
 }
 //-------------------------------------------------------------------------
 int existe(int num) { return (dp2[num] != -1) ? 1 : 0; }
-//--------------------------------------------------------------------
+//-------------------------------------------------------------------------
 void search_Tree(Series *no, int codigo, int num, int opc) {
 	if (!existe(codigo) || !no) {
 		printf("Codigo nao cadastrado, informe um codigo valido!\n");
