@@ -87,6 +87,7 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 				printf("Informe o nome do personagem:\n");
 				scanf("%s", nick);
 				traversal(no->temporadas, nick);
+				break;
 		}
 	} else {
 		search_Tree(no->esq, codigo, num, opc);
