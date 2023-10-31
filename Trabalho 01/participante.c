@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "participante.h"
 #include "temporadas.h"
 
@@ -47,4 +48,13 @@ void imprimir_participantes(Participantes* lista) {
 		printf("Ator: %s\nPapel: %s\nDescricao: %s\n", lista->nome_artista, lista->nome_personagem, lista->descricao);
 		imprimir_participantes(lista->next);
 	}
+}
+//--------------------------------------------------------------------
+void imprimir_artista(Participantes *no, char *personagem) {
+    if (no) {
+        if (strcmp(no->nome_personagem, personagem) == 0) {
+            printf("Artista: %s\n", no->nome_artista);
+        }
+        imprimir_artista(no->next, personagem);
+    }
 }
