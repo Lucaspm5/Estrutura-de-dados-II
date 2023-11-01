@@ -63,5 +63,6 @@ int main() {
                 break;
         }
     } while (opc != -1);
+    liberar_series(pointer);
     return 0;
 }

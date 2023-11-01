@@ -88,3 +88,12 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 		}
 	}
 }
+//-------------------------------------------------------------------------
+void liberar_series(Series *no) {
+	if (no) {
+		liberar_series(no->l);
+		liberar_temporada(no->temporadas);
+		free(no);
+		liberar_series(no->r);
+	}
+}

@@ -53,3 +53,10 @@ void imprimir_artista(Participantes *no, char *personagem) {
         imprimir_artista(no->next, personagem);
     }
 }
+//--------------------------------------------------------------------
+void liberar_participantes(Participantes *no) {
+    if (no) {
+        liberar_participantes(no->next);
+        free(no);
+    }
+}

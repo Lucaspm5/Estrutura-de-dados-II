@@ -19,6 +19,7 @@ int existe_temp(int num);
 int _Validtemp(temp *no);
 void imprimir(temp *no);
 void traversal(temp *no, char *nick);
+void liberar_temporada(temp *no);
 //-------------------------------------------------------------------------
 extern int dp1[10000];
 extern int flag1;
