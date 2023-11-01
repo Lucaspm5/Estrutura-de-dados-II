@@ -8,9 +8,19 @@
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(m) (m*) malloc(sizeof(m))
 //-------------------------------------------------------------------------
-int dp1[10000], flag1 = 1;
+int dp1[10000];
 //-------------------------------------------------------------------------
 void _INIT() { memset(dp1, -1, sizeof(dp1)); }
+//-------------------------------------------------------------------------
+int valid(char *nome) {
+    int ans = 1, i = 0;
+    while (nome[i] != '\0' && ans) {
+        if(((nome[i] & 0xF0) == 0x30) && (nome[i] & 0x0F) <= 0x09)
+            ans = 0;
+        ++i;
+    }
+    return ans > 0 ? 1 : 0;
+}
 //-------------------------------------------------------------------------
 temp* _Creater(int number, int eps, int year, char *rating) {
     temp *no = ALOCAR(temp);
@@ -24,10 +34,6 @@ temp* _Creater(int number, int eps, int year, char *rating) {
 //-------------------------------------------------------------------------
 void insert_tree(temp **r, int number, int eps, int year, char *rating) {
     temp *aux = NULL;
-    if (flag1) {
-        _INIT();
-        flag1 = !flag1;
-    }
     if (*r == NULL) {
         aux = _Creater(number, eps, year, rating);
         (*r) = aux;
@@ -55,16 +61,30 @@ void search_binary(temp *no, int num, int opc) {
         return;
     }
     if (no->numero == num) {
+        int error = 1, artista = 1, personagem = 1;
         char nomea[50], nomep[50], d[200];
         switch(opc) {
             case 3:
-                printf("Informe o nome do artista:\n"); scanf("%s", nomea);
-                fflush(stdin);
-                printf("Informe o nome do personagem:\n"); scanf("%s", nomep);
-                printf("Informe a descricao:\n");
-                fflush(stdin);
-                scanf("%[^\n]s", d);
-                insertAndSort(&no->participantes, nomea, nomep, d);
+                while (error != 0) {
+                    printf("Informe o nome do artista:\n"); scanf("%s", nomea);
+                    if (!valid(nomea)) artista = 0;
+                    fflush(stdin);
+                    printf("Informe o nome do personagem:\n"); scanf("%s", nomep);
+                    if (!valid(nomep)) personagem = 0;
+                    printf("Informe a descricao:\n");
+                    fflush(stdin);
+                    scanf("%[^\n]s", d);
+                    if (valid(nomea) && valid(nomep)) {
+                        error = 0;
+                        insertAndSort(&no->participantes, nomea, nomep, d);
+                    } else {
+                        printf("Ops algo deu errado!\n");
+                        printf((!artista) ? "Insira apenas letras no campo artista!\n"
+                            : ((!personagem) ? "Informe apenas letras no campo personagem!\n"
+                            : "Informe letras no campos artistas e personagens!\n"));
+                        artista = personagem = 1;
+                    }
+                }
                 break;
             case 6:
                 if (!(no->participantes)) {
@@ -92,7 +112,7 @@ void traversal(temp *no, char *nick) {
 void liberar_temporada(temp *no) {
 	if (no) {
 		liberar_temporada(no->l);
-                liberar_participantes(no->participantes);
+        liberar_participantes(no->participantes);
 		free(no);
 		liberar_temporada(no->r);
 	}

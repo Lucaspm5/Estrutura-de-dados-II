@@ -11,7 +11,7 @@ void menu() {
     printf("(1) - Adicionar Serie\n");
     printf("(2) - Adicionar Temporada\n");
     printf("(3) - Adicionar Participantes\n");
-    printf("(4) - Imprimir o titulo, o numero de temporadas\n");
+    printf("(4) - Imprimir o codigo, o titulo, e o numero de temporadas\n");
     printf("(5) - Imprimir os dados de todas as temporadas de uma serie\n");
     printf("(6) - Imprimir todos os personagens de uma determinada temporada\n");
     printf("(7) - Imprimir o nome de todos os artistas que interpretaram um determinado personagem\n");
@@ -19,8 +19,12 @@ void menu() {
 }
 //--------------------------------------------------------------------
 int main() {
+    vectormemo();
+    _INIT();
+
     Series *pointer = NULL;
     temp *no = NULL;
+
     char titulo[50], tit[50];
     int opc, numb, qntd_eps, ano, codigo, num_temp;
     do {
@@ -31,7 +35,9 @@ int main() {
             case 1:
                 printf("Informe o codigo, num_temporadas, titulo:\n");
                 scanf("%d %d %s", &codigo, &num_temp, titulo);
-                inserir_serie(&pointer, codigo, num_temp, titulo);
+                if (dp2[codigo] == -1) {
+                    inserir_serie(&pointer, codigo, num_temp, titulo);
+                } else printf("Os codigos devem ser unicos!\n");
                 break;
             case 2:
                 printf("Informe o codigo da serie a qual voce deseja inserir uma temporada:\n");
@@ -44,9 +50,7 @@ int main() {
                 search_Tree(pointer, codigo, numb, opc);
                 break;
             case 4:
-                printf("Informe o codigo da serie:\n");
-                scanf("%d", &codigo);
-                search_Tree(pointer, codigo, numb, opc);
+                imprimir_series(pointer);
                 break;
             case 5:
                 search_Tree(pointer, codigo, numb, opc);
@@ -58,7 +62,7 @@ int main() {
                 break;
             case 7:
                 printf("Informe o codigo da serie:\n");
-                scanf("%d %d", &codigo);
+                scanf("%d", &codigo);
                 search_Tree(pointer, codigo, numb, opc);
                 break;
         }

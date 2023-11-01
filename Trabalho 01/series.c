@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
 
 #include "participante.h"
@@ -9,7 +10,7 @@
 #define debug(x) printf("%s is %d\n", #x, x)
 #define ALOCAR(y) (y*) malloc(sizeof(y))
 //-------------------------------------------------------------------------
-int dp2[10000], flag2 = 1;
+int dp2[10000];
 //-------------------------------------------------------------------------
 void vectormemo() { memset(dp2, -1, sizeof(dp2)); }
 //-------------------------------------------------------------------------
@@ -25,10 +26,6 @@ Series* create_node(int codigo, char* titulo, int num_temporadas) {
 void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 	if(!(*no)) {
 		(*no) = create_node(codigo, titulo, num_temp);
-		if (flag2) {
-			vectormemo();
-			flag2 = !flag2;
-		}
 		dp2[(*no)->codigo] = 1;
 	} else {
 		if(codigo < (*no)->codigo) {
@@ -42,7 +39,7 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 void imprimir_series(Series* no) {
 	if(no) {
 		imprimir_series(no->l);
-		printf("Codigo: %d\nTitulo: %s\nTemporadas: %d\n", no->codigo, no->titulo, no->num_temporadas);
+		printf("Codigo: %d\n|Titulo - %s Temporadas - %d|\n", no->codigo, no->titulo, no->num_temporadas);
 		imprimir_series(no->r);
 	}
 }
@@ -66,8 +63,6 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 			case 3:
 				search_binary(no->temporadas, num, opc);
 				break;
-			case 4: imprimir_series(no);
-				break;
 			case 5:
 				imprimir(no->temporadas);
 				break;
@@ -75,8 +70,10 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 				search_binary(no->temporadas, num, opc);
 				break;
 			case 7:
+				fflush(stdin);
 				printf("Informe o nome do personagem:\n");
 				scanf("%s", nick);
+				fflush(stdin);
 				traversal(no->temporadas, nick);
 				break;
 		}
