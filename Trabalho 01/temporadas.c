@@ -92,7 +92,7 @@ void traversal(temp *no, char *nick) {
 void liberar_temporada(temp *no) {
 	if (no) {
 		liberar_temporada(no->l);
-        liberar_participantes(no->participantes);
+                liberar_participantes(no->participantes);
 		free(no);
 		liberar_temporada(no->r);
 	}
