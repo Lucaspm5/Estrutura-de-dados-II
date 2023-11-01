@@ -50,7 +50,7 @@ int main() {
                 search_Tree(pointer, codigo, numb, opc);
                 break;
             case 4:
-                imprimir_series(pointer);
+                (pointer) ? imprimir_series(pointer) : printf("Cadastre alguma serie\n");
                 break;
             case 5:
                 search_Tree(pointer, codigo, numb, opc);

@@ -39,7 +39,7 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 void imprimir_series(Series* no) {
 	if(no) {
 		imprimir_series(no->l);
-		printf("Codigo: %d\n|Titulo - %s Temporadas - %d|\n", no->codigo, no->titulo, no->num_temporadas);
+		printf("-Codigo-: %d\n|Titulo - %s|\nTemporadas - %d|\n", no->codigo, no->titulo, no->num_temporadas);
 		imprimir_series(no->r);
 	}
 }
