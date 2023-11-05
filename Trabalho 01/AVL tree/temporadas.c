@@ -47,39 +47,39 @@ void rotate2(temp **no, int dir) {
 		(*no)->l = new->r;
 		new->r = *no;
 	}
-	(*no)->h = 1 + max(altura((*no)->l), altura((*no)->r));
-	new->h = 1 + max(altura(new->l), altura(new->r));
+	(*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
+	new->h = 1 + max(height2(new->l), height2(new->r));
 	*no = new;
 }
 //-------------------------------------------------------------------------
-void insert_tree(temp **r, int number, int eps, int year, char *rating) {
-    if(!(*r)) {
-        *r = _Creater(number, eps, year, rating);
-        dp1[(*r)->numero] = 1;
+void insert_tree(temp **no, int number, int eps, int year, char *rating) {
+    if(!(*no)) {
+        *no = _Creater(number, eps, year, rating);
+        dp1[(*no)->numero] = 1;
         return;
     }
-    if (number < (*r)->numero) {
-		insert_tree(&(*r)->l, number, eps, year, rating);
-		if (height2((*r)->l) - height2((*r)->r) == 2) {
-			if (number < (*r)->l->numero) {
-				rotate(r, RIGHT);
-			} else if (number > (*r)->l->numero) {
-				rotate(r, LEFT);
-				rotate(r, RIGHT);
+    if (number < (*no)->numero) {
+		insert_tree(&(*no)->l, number, eps, year, rating);
+		if (height2((*no)->l) - height2((*no)->r) == 2) {
+			if (number < (*no)->l->numero) {
+				rotate2(no, RIGHT);
+			} else if (number > (*no)->l->numero) {
+				rotate2(no, LEFT);
+				rotate2(no, RIGHT);
 			}
 		}
-	} else if (number > (*r)->numero) {
-		insert_tree(&(*r)->l, number, eps, year, rating);
-		if (height2((*r)->r) - height2((*r)->l) == 2) {
-			if (number > (*r)->r->numero) {
-				rotate(r, LEFT);
-			} else if (number > (*r)->r->numero) {
-				rotate(r, RIGHT);
-				rotate(r, LEFT);
+	} else if (number > (*no)->numero) {
+		insert_tree(&(*no)->l, number, eps, year, rating);
+		if (height2((*no)->r) - height2((*no)->l) == 2) {
+			if (number > (*no)->r->numero) {
+				rotate2(no, LEFT);
+			} else if (number > (*no)->r->numero) {
+				rotate2(no, RIGHT);
+				rotate2(no, LEFT);
 			}
 		}
 	}
-	(*r)->h = 1 + max(height2((*r)->l), height2((*r)->r));
+	(*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
 }
 //-------------------------------------------------------------------------
 void imprimir(temp *no) {
@@ -127,7 +127,10 @@ void search_binary(temp *no, int num, int opc) {
             case 6:
                 if (!(no->participantes)) {
                     printf("Acao nao concluida, eh nescessario adicionar participantes\n");
-                } else imprimir_participantes(no->participantes);
+                } else {
+                    printf("Personagens -\n");
+                    imprimir_personagens(no->participantes);
+                }
                 break;
         }
     } else {

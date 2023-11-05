@@ -53,20 +53,20 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 		inserir_serie(&(*no)->l, codigo, num_temp, titulo);
 		if (height1((*no)->l) - height1((*no)->r) == 2) {
 			if (codigo < (*no)->l->codigo) {
-				rotate(no, RIGHT);
+				rotate1(no, RIGHT);
 			} else if (codigo > (*no)->l->codigo) {
-				rotate(no, LEFT);
-				rotate(no, RIGHT);
+				rotate1(no, LEFT);
+				rotate1(no, RIGHT);
 			}
 		}
 	} else if (codigo > (*no)->codigo) {
 		inserir_serie(&(*no)->r, codigo, num_temp, titulo);
 		if (height1((*no)->r) - height1((*no)->l) == 2) {
 			if (codigo > (*no)->r->codigo) {
-				rotate(no, LEFT);
+				rotate1(no, LEFT);
 			} else if (codigo > (*no)->r->codigo) {
-				rotate(no, RIGHT);
-				rotate(no, LEFT);
+				rotate1(no, RIGHT);
+				rotate1(no, LEFT);
 			}
 		}
 	}
