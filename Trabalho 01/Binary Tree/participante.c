@@ -54,6 +54,13 @@ void imprimir_artista(Participantes *no, char *personagem) {
     }
 }
 //--------------------------------------------------------------------
+void imprimir_personagens(Participantes* lista) {
+	if (lista) {
+		printf("%s\n", lista->nome_personagem);
+		imprimir_personagens(lista->next);
+	}
+}
+//--------------------------------------------------------------------
 void liberar_participantes(Participantes *no) {
     if (no) {
         liberar_participantes(no->next);

@@ -89,7 +89,10 @@ void search_binary(temp *no, int num, int opc) {
             case 6:
                 if (!(no->participantes)) {
                     printf("Acao nao concluida, eh nescessario adicionar participantes\n");
-                } else imprimir_participantes(no->participantes);
+                } else {
+                    printf("Personagens -\n");
+                    imprimir_personagens(no->participantes);
+                }
                 break;
         }
     } else {

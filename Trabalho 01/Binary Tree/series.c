@@ -52,7 +52,7 @@ void search_Tree(Series *no, int codigo, int num, int opc) {
 		return;
 	}
 	if (no->codigo == codigo) {
-		int numb, qntd_eps, ano;
+		int numb, qntd_eps, ano, ans = 0;
 		char tit[50], nick[50];
 		switch(opc) {
 			case 2:
