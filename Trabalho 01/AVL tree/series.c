@@ -47,25 +47,25 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 	if (!(*no)) {
 		*no = create_node(codigo, titulo, num_temp);
 		dp2[(*no)->codigo] = 1;
-		return;
+		//return;
 	}
 	if (codigo < (*no)->codigo) {
 		inserir_serie(&(*no)->l, codigo, num_temp, titulo);
 		if (height1((*no)->l) - height1((*no)->r) == 2) {
 			if (codigo < (*no)->l->codigo) {
 				rotate1(no, RIGHT);
-			} else if (codigo > (*no)->l->codigo) {
-				rotate1(no, LEFT);
+			} else {
+				rotate1(&(*no)->l, LEFT);
 				rotate1(no, RIGHT);
 			}
-		}
+    }
 	} else if (codigo > (*no)->codigo) {
 		inserir_serie(&(*no)->r, codigo, num_temp, titulo);
 		if (height1((*no)->r) - height1((*no)->l) == 2) {
 			if (codigo > (*no)->r->codigo) {
 				rotate1(no, LEFT);
-			} else if (codigo > (*no)->r->codigo) {
-				rotate1(no, RIGHT);
+			} else {
+				rotate1(&(*no)->r, RIGHT);
 				rotate1(no, LEFT);
 			}
 		}

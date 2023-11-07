@@ -56,29 +56,29 @@ void insert_tree(temp **no, int number, int eps, int year, char *rating) {
     if(!(*no)) {
         *no = _Creater(number, eps, year, rating);
         dp1[(*no)->numero] = 1;
-        return;
+        //return;
     }
     if (number < (*no)->numero) {
-		insert_tree(&(*no)->l, number, eps, year, rating);
-		if (height2((*no)->l) - height2((*no)->r) == 2) {
-			if (number < (*no)->l->numero) {
-				rotate2(no, RIGHT);
-			} else if (number > (*no)->l->numero) {
-				rotate2(no, LEFT);
-				rotate2(no, RIGHT);
-			}
-		}
-	} else if (number > (*no)->numero) {
-		insert_tree(&(*no)->l, number, eps, year, rating);
-		if (height2((*no)->r) - height2((*no)->l) == 2) {
-			if (number > (*no)->r->numero) {
-				rotate2(no, LEFT);
-			} else if (number > (*no)->r->numero) {
-				rotate2(no, RIGHT);
-				rotate2(no, LEFT);
-			}
-		}
-	}
+        insert_tree(&(*no)->l, number, eps, year, rating);
+        if (height2((*no)->l) - height2((*no)->r) == 2) {
+            if (number < (*no)->l->numero) {
+                rotate2(no, RIGHT);
+            } else {
+                rotate2(&(*no)->l, LEFT);
+                rotate2(no, RIGHT);
+            }
+    }
+    } else if (number > (*no)->numero) {
+        insert_tree(&(*no)->r, number, eps, year, rating);
+        if (height2((*no)->r) - height2((*no)->l) == 2) {
+            if (number > (*no)->r->numero) {
+                rotate2(no, LEFT);
+            } else {
+                rotate2(&(*no)->r, RIGHT);
+                rotate2(no, LEFT);
+            }
+        }
+    }
 	(*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
 }
 //-------------------------------------------------------------------------
