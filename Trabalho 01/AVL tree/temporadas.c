@@ -79,7 +79,7 @@ void insert_tree(temp **no, int number, int eps, int year, char *rating) {
             }
         }
     }
-	(*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
+    (*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
 }
 //-------------------------------------------------------------------------
 void imprimir(temp *no) {
