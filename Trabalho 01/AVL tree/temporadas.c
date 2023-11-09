@@ -56,7 +56,6 @@ void insert_tree(temp **no, int number, int eps, int year, char *rating) {
     if(!(*no)) {
         *no = _Creater(number, eps, year, rating);
         dp1[(*no)->numero] = 1;
-        //return;
     }
     if (number < (*no)->numero) {
         insert_tree(&(*no)->l, number, eps, year, rating);
@@ -79,7 +78,7 @@ void insert_tree(temp **no, int number, int eps, int year, char *rating) {
             }
         }
     }
-    (*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
+	(*no)->h = 1 + max(height2((*no)->l), height2((*no)->r));
 }
 //-------------------------------------------------------------------------
 void imprimir(temp *no) {

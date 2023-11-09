@@ -47,7 +47,6 @@ void inserir_serie(Series** no, int codigo, int num_temp, char *titulo) {
 	if (!(*no)) {
 		*no = create_node(codigo, titulo, num_temp);
 		dp2[(*no)->codigo] = 1;
-		//return;
 	}
 	if (codigo < (*no)->codigo) {
 		inserir_serie(&(*no)->l, codigo, num_temp, titulo);
